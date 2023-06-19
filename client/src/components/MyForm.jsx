@@ -1,24 +1,31 @@
 import { useState } from "react";
 import { socket } from "../socket"
 
-export const MyForm = () => {
+export const MyForm = ({ room, user }) => {
   const [value, setValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (e) => {
+  const handleChange = (value) => {
+    socket.emit('chat typing', { room, user });
+
+    setValue(value);
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
 
-    socket.timeout(500).emit('messages', value, () => {
+    socket.timeout(500).emit('messages', room, user, value, () => {
       setIsLoading(false);
+      setValue('');
     })
   }
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit}>
         <input
           type="text"
-          onChange={(e) => setValue(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           value={value}
         />
 

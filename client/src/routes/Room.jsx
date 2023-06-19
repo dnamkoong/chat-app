@@ -1,32 +1,48 @@
 import { useState, useEffect } from "react";
-import { socket } from '../socket';
 import { useNavigate } from "react-router-dom"
+import { socket } from '../socket';
+import { uniqueName } from "../utils";
 import { MyEvents } from '../components/MyEvents';
 import { MyForm } from '../components/MyForm';
 
 const Room = () => {
   const [messages, setMessages] = useState([]);
   const navigate = useNavigate();
+  let roomName = window.location.pathname
+    .split('/')
+    .pop();
 
   useEffect(() => {
-    const onMessage = (value) => {
-      setMessages(msg => [...msg, value]);
+    socket.emit('join room', roomName, uniqueName);
+  }, [])
+
+  useEffect(() => {
+    const onMessage = (user, value) => {
+      console.log(user, value);
+      setMessages([
+        ...messages,
+        {
+          user, value
+        }
+      ])
     };
 
-    socket.connect();
     socket.on('messages', onMessage);
 
     return () => {
       socket.off('messages', onMessage);
     };
-  }), [];
+  }), [messages];
 
   return (
     <>
       <h1>Room1</h1>
 
       <MyEvents messages={messages} />
-      <MyForm />
+      <MyForm
+        room={roomName}
+        user={uniqueName}
+      />
 
       <button
         type="button"

@@ -4,7 +4,7 @@ export const MyEvents = ({ messages }) => {
       <ul>
         {
           messages.map((message, index) => (
-            <li key={index}>{message}</li>
+            <li key={index}>{message.user}: {message.value}</li>
           ))
         }
       </ul>
