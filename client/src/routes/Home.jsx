@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { uniqueName } from '../utils';
+import { nameGen } from '../utils';
 import '../App.css'
 
 const Home = () => {
@@ -7,7 +7,7 @@ const Home = () => {
     <div className='Home'>
         <h1>Stream Sync</h1>
         <Link
-          to={`/room/${uniqueName}`}
+          to={`/room/${nameGen()}`}
         >
           Join Room
         </Link>

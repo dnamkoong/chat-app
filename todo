@@ -1,3 +1,10 @@
+- dispatch to use useReducer
+
+
+https://developers.google.com/youtube/v3/docs/search/list
+
+
+
 - chat area
 - rooms
 
@@ -9,3 +16,8 @@
 router
 - show list of user profiles
 - user profiles contains info ex. name, twitter handle, etc
+
+
+
+
+DONE - chat bottom to bottom, currently one line above

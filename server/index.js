@@ -3,6 +3,13 @@ const app = express();
 const http = require('http').Server(app);
 const cors = require('cors');
 
+const {
+  addUser,
+  removeUser,
+  getUser,
+  getUsersInRoom
+} = require('./users');
+
 app.use(cors());
 
 const io = require('socket.io')(http, {
@@ -11,24 +18,39 @@ const io = require('socket.io')(http, {
   }
 });
 
-io.on('connection', async (socket) => {
-  socket.on('join room', (room, name) => {
-    console.log('room name: ', room, name);
+io.on('connection', (socket) => {
+  socket.on('join room', ({ room, name, color }) => {
+    const user = addUser(socket.id, name, room, color);
     socket.join(room);
+    console.log('join room', room, name, color);
 
-    io.to(room).emit('join room', `${name} has joined ${room} room`)
+    // console.log(getUsersInRoom(room).length);
+
+    io.to(room).emit('chat', {
+      id: socket.id,
+      name,
+      room,
+      color,
+      chat: `${name} has joined ${room}`
+    });
+    io.to(room).emit('user', user);
   });
 
-  socket.on('messages', (room, user, message) => {
-    console.log('messages: ', room, user, message);
+  socket.on('chat', (data) => {
+    console.log('chat: ', data);
 
-    io.to(room).emit('messages', user, message);
+    io.to(data.room).emit('chat', data);
   });
 
-  // socket.on('chat typing', ({ room, user }) => {
-  //   console.log('chat typing: ', room, user);
-  //   io.to(room).emit('messages', user, 'chat typing');
-  // })
+  socket.on('chatTyping', (data) => {
+    // console.log('chat typing: ', data);
+    io.to(data.room).emit('chatTyping', data);
+  });
+
+  socket.on('userList', (data) => {
+    console.log('user list', data);
+    io.to(data.room).emit('userList', data)
+  })
 
   socket.on('disconnect', () => {
     console.clear();
