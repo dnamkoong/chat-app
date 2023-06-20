@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef, useReducer } from "react";
 import { socket } from "../../socket"
 import Input from "../Input";
-import { initialState, chatReducer } from "../../reducers/chatReducer";
+import { chatState as initialState, chatReducer } from "../../reducers/chatReducer";
 
-export const Chat = ({ chatServer, chatLog, userName }) => {
+export const Chat = ({ chatLog, userName }) => {
   const [chat, setChat] = useState('');
   const [typing, setTyping] = useState({ id: undefined, active: false });
   const [user, setUser] = useState('');
@@ -28,7 +28,7 @@ export const Chat = ({ chatServer, chatLog, userName }) => {
     };
 
     const onUserListEvent = (data) => {
-      console.log('onUserListEvent: ', data);
+      // console.log('onUserListEvent: ', data);
       const { id, name, room, color } = data;
       // socket.emit('userList', { id, name, room, color })
       dispatch({ type: 'POST_USER_LIST', payload: { id, name, room, color } });
