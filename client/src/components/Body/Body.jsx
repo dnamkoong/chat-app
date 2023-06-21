@@ -50,8 +50,10 @@ export const Body = ({ items }) => {
   useEffect(() => {
     if (page >= 0 && pageYT && room === searchRoom) {
       if (pageYT === 'next') {
+        console.log('1: ', searchServer, state.pageNext);
         getSearchQueryYT(searchServer, state.pageNext);
       } else {
+        console.log('2: ', searchServer, state.pageNext);
         getSearchQueryYT(searchServer, state.pagePrev);
       }
     }
@@ -59,27 +61,35 @@ export const Body = ({ items }) => {
 
   const getSearchQueryYT = async (data, pageYT) => {
     let payloadPage;
-    let payloadItems;
 
     try {
       payloadPage = await searchService.getSearchQueryYT(data, pageYT);
-      payloadItems = await searchService.getSearchPageYT(payloadPage.data.items);
-      // payloadItems: undefined
 
     } catch (error) {
       return error;
     } finally {
-      console.log(payloadPage, payloadItems);
+      console.log('payloadPage: ', payloadPage);
+      getSearchPageYT(payloadPage)
+    }
+  };
 
+  const getSearchPageYT = async (payloadPage) => {
+    let payloadItems;
+
+    try {
+      payloadItems = await searchService.getSearchPageYT(payloadPage.items);
+    } catch(error) {
+      return error;
+    } finally {
       dispatch({
         type: 'GET_YOUTUBE',
         payloadPage,
         payloadItems,
       });
 
-      socket.emit('query', { payloadPage, payloadItems, room });
+      socket.emit('query', { items, payloadItems, room });
     }
-  };
+  }
 
   const handlePlaying = (videoId) => {
     const playId = items.filter(el => el.id === videoId);
