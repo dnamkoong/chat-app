@@ -13,8 +13,7 @@ import './index.scss';
 
 TimeAgo.addLocale(en)
 
-export const Body = () => {
-  const [pageUser, setPageUser] = useState('');
+export const Body = ({ user }) => {
   const [searchRoom, setSearchRoom] = useState('');
   const [searchServer, setSearchServer] = useState('');
   const [playingServer, setPlayingServer] = useState(false);
@@ -35,16 +34,10 @@ export const Body = () => {
       }
     };
 
-    const onUserEvent = (data) => {
-      setPageUser(data);
-    }
-
     socket.on('search', onSearchEvent);
-    socket.on('user', onUserEvent);
 
     return () => {
       socket.off('search', onSearchEvent);
-      socket.off('user', onUserEvent);
     }
   }, []);
 
@@ -96,11 +89,11 @@ export const Body = () => {
     // const playId = items.filter(el => el.id === videoId);
 
     let data = {
-      id: pageUser.id,
+      id: user.id,
       videoId: playId,
-      name: pageUser.name,
-      room: pageUser.room,
-      color: pageUser.color
+      name: user.name,
+      room: user.room,
+      color: user.color
     };
 
     if (playingServer === false) {
@@ -139,7 +132,7 @@ export const Body = () => {
         />
 
         <NowPlaying
-          pageUser={pageUser.id}
+          user={user.id}
         />
         <div className="video-container">
           {state && state?.items.map((item, i) => (

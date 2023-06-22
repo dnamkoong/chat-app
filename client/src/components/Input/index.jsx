@@ -1,4 +1,4 @@
-import './Input.scss';
+import './index.scss';
 
 export default function Input({ className, value, onChange, placeHolder, btnClick, btnText }) {
   return (

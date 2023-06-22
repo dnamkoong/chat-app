@@ -1,4 +1,6 @@
 6/22
+
+
 - name change doesnt update userList name
 
 - rearrange chat
@@ -30,3 +32,4 @@ router
 
 
 DONE - chat bottom when changing name
+DONE - Body and Chat both call socket 'user', call from Room and pass as prop

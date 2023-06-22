@@ -5,11 +5,10 @@ import { ChatHistory } from "./ChatHistory";
 import { chatState as initialState, chatReducer } from "../../reducers/chatReducer";
 import './index.scss';
 
-export const Chat = ({ userName }) => {
+export const Chat = ({ user, userName }) => {
   // const [pageUserId, setPageUserId] = useState('');
   const [chat, setChat] = useState('');
   const [typing, setTyping] = useState({ id: undefined, active: false });
-  const [user, setUser] = useState('');
   const [name, setName] = useState('');
   const [chatSettings, setChatSettings] = useState(false);
   const [state, dispatch] = useReducer(chatReducer, initialState);
@@ -20,16 +19,6 @@ export const Chat = ({ userName }) => {
 
 
   useEffect(() => {
-    const onUserEvent = (data) => {
-      // console.log('user:', data, userName);
-      if (userName === data.name) {
-        const { id, name, room, color } = data;
-        setUser({ id, name, room, color });
-        // setPageUserId(data.id)
-        socket.emit('userList', { id, name, room, color });
-      }
-    };
-
     const onUserListEvent = (data) => {
       // console.log('userList:', data);
       const { id, name, room, color } = data;
@@ -37,11 +26,9 @@ export const Chat = ({ userName }) => {
       dispatch({ type: 'POST_USER_LIST', payload: { id, name, room, color } });
     }
 
-    socket.on('user', onUserEvent);
     socket.on('userList', onUserListEvent);
 
     return () => {
-      socket.off('user', onUserEvent);
       socket.off('userList', onUserListEvent);
     }
   }, []);
@@ -104,7 +91,7 @@ export const Chat = ({ userName }) => {
 
     let msg = { id, name, room, chat: `${userName} changed to ${name}`, color };
     socket.emit('chat', msg);
-    setUser({ id, name, room, color });
+    socket.emit('user', { id, name, room, color });
 
     setName('');
     setChatSettings(false);
