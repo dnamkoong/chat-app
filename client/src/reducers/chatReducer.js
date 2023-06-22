@@ -3,7 +3,7 @@ export const chatState = {
 };
 
 export const chatReducer = (state = chatState, action) => {
-  switch (action.type) {
+  switch (action?.type) {
     case 'POST_USER_LIST':
       // console.log('POST_USER_LIST: ', action.payload);
       return {

@@ -6,7 +6,7 @@ export const searchState = {
 };
 
 export const searchReducer = (state = searchState, action) => {
-  switch (action.type) {
+  switch (action?.type) {
     case 'GET_YOUTUBE':
       return {
         ...state,

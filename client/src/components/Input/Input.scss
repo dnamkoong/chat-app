@@ -1,0 +1,34 @@
+.input {
+
+  form {
+    display: flex;
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #d8d8d8;
+      padding: 10px;
+      border-radius: 3px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    button {
+      width: 100%;
+      max-width: 100px;
+      border-radius: 3px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border: 1px solid #1aa6b7;
+      background: #1aa6b7;
+      color: #fff;
+      cursor: pointer;
+      outline: none;
+      transition: .3s ease-in-out;
+      &:hover {
+        background: #fff;
+        color: #333;
+      }
+    }
+  }
+}

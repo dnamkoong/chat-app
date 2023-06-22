@@ -1,8 +1,9 @@
 import { useState, useReducer } from "react";
-import { socket } from "../../socket";
-import { nowPlayingState, nowPlayingReducer } from "../../reducers/nowPlayingReducer";
+import { socket } from "../../../socket";
+import { nowPlayingState, nowPlayingReducer } from "../../../reducers/nowPlayingReducer";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { format } from "../../utils";
+import { format } from "../../../utils";
+import './index.scss';
 
 export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowPlayingServer }) => {
   const [active, setActive] = useState(1);

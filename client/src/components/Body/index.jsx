@@ -6,13 +6,14 @@ import ReactTimeAgo from 'react-time-ago';
 import { socket } from "../../socket";
 import { Search } from './Search';
 import { NowPlaying } from './NowPlaying'
+import { Player } from './Player';
 import { searchReducer, searchState } from "../../reducers/searchReducer";
 import searchService from '../../services/searchService';
-
+import './index.scss';
 
 TimeAgo.addLocale(en)
 
-export const Body = ({ items }) => {
+export const Body = () => {
   const [pageUser, setPageUser] = useState('');
   const [searchRoom, setSearchRoom] = useState('');
   const [searchServer, setSearchServer] = useState('');
@@ -64,11 +65,9 @@ export const Body = ({ items }) => {
 
     try {
       payloadPage = await searchService.getSearchQueryYT(data, pageYT);
-
     } catch (error) {
       return error;
     } finally {
-      console.log('payloadPage: ', payloadPage);
       getSearchPageYT(payloadPage)
     }
   };
@@ -87,12 +86,14 @@ export const Body = ({ items }) => {
         payloadItems,
       });
 
-      socket.emit('query', { items, payloadItems, room });
+      socket.emit('query', { searchState, payloadItems, room }); //
     }
   }
 
   const handlePlaying = (videoId) => {
-    const playId = items.filter(el => el.id === videoId);
+    console.log(chatState);
+    const playId = searchState.filter(el => el.id === videoId);
+    // const playId = items.filter(el => el.id === videoId);
 
     let data = {
       id: pageUser.id,
@@ -141,7 +142,7 @@ export const Body = ({ items }) => {
           pageUser={pageUser.id}
         />
         <div className="video-container">
-          {items.map((item, i) => (
+          {state && state?.items.map((item, i) => (
             <div
               key={i}
               className="video-holder"
@@ -149,7 +150,7 @@ export const Body = ({ items }) => {
               <div
                 className="video-wrapper"
                 onClick={() => handlePlaying(item.id)}
-              ></div>
+              >handlePlaying</div>
               <Player videoId={item.id} />
               <div className="details">
                 <h2 className="title">
@@ -176,7 +177,7 @@ export const Body = ({ items }) => {
           ))}
         </div>
 
-        <div className={`button-holder ${items.length !== 0 ? 'active' : ''}`}>
+        <div className={`button-holder ${state?.items.length !== 0 ? 'active' : ''}`}>
           <button
             className="prev"
             onClick={() => handlePageClick('prev')}

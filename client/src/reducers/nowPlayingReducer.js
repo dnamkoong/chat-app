@@ -3,7 +3,7 @@ export const nowPlayingState = {
 };
 
 export const nowPlayingReducer = (state = nowPlayingState, action) => {
-  switch(action.type) {
+  switch(action?.type) {
     case 'VOLUME_ADJUST':
       return {
         ...state,

@@ -1,3 +1,5 @@
+import './Input.scss';
+
 export default function Input({ className, value, onChange, placeHolder, active, btnClick, btnText }) {
   return (
     <div className={`input ${className}`}>

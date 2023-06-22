@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useReducer } from "react";
 import { socket } from "../../socket"
 import Input from "../Input";
 import { chatState as initialState, chatReducer } from "../../reducers/chatReducer";
+import './index.scss';
 
 export const Chat = ({ chatLog, userName }) => {
   const [chat, setChat] = useState('');
@@ -66,7 +67,6 @@ export const Chat = ({ chatLog, userName }) => {
         active: data.active
       });
     });
-
     bottomRef?.current?.scrollIntoView({
       behavior: 'smooth'
     })
@@ -83,12 +83,18 @@ export const Chat = ({ chatLog, userName }) => {
   const handleName = (e) => {
     e.preventDefault();
     const { id, room, color } = user;
-    console.log(name);
 
     setUser({ id, name, color });
     let msg = { id, name, room, chat: `${namePrev} changed to ${name}`, color };
     socket.emit('chat', msg);
     setUser({ id, name, room, color });
+
+    bottomRef.current.scrollIntoView({
+      behavior: 'smooth'
+    });
+
+    console.log(name);
+
     setName('');
     setChatSettings(false);
   };
@@ -104,33 +110,30 @@ export const Chat = ({ chatLog, userName }) => {
       {chatLog.map((item, i) => item.chat !== '' ? (
           <div
             key={i}
-            className={user.id === item.id ? 'me' : ''}
+            className={`chat-holder ${user.id === item.id ? 'me' : 'other'}`}
           >
-
             <div className="name">
               <span
-                className="nameBox"
+                className="name-box"
                 style={{ background: item.color }}
-              >
-                {
+              ></span>
+              <p>{
                   item.name.charAt(0).toUpperCase() + item.name.split('-').pop().charAt(0).toUpperCase()
-                } :
-              </span>
-
-              <span className="chat">
-                {item.chat}
-              </span>
+                }</p>
             </div>
 
+            <p className="message">
+                {item.chat}
+              </p>
           </div>
       ) : '')}
-      <div ref={bottomRef} style={{ height: "24px" }} />
+      <div className="bottomRef" ref={bottomRef} style={{ height: "24px" }} />
     </div>
   )
 
   let chatTyping = '';
   chatTyping = (
-    <p className={typing.active ? 'active' : ''} style={{ margin: "0" }}>
+    <p className={typing.active ? 'typing' : ''}>
       {typing.active ? `${typing.name} is typing` : ''}
     </p>
   )
@@ -139,7 +142,7 @@ export const Chat = ({ chatLog, userName }) => {
     <div className="chat">
       <div className="inner">
         <Input
-          className={`nameChange ${chatSettings ? 'active' : ''}`}
+          className={`name-change ${chatSettings ? 'active' : ''}`}
           value={name}
           onChange={setName}
           placeHolder="Change name"

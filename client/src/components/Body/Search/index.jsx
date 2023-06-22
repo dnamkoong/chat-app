@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { socket } from "../../socket";
-import Input from "../Input";
+import { socket } from "../../../socket";
+import Input from "../../Input";
+import './index.scss';
 
 export const Search = () => {
   const [search, setSearch] = useState('nba');

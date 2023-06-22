@@ -1,10 +1,11 @@
 import { useState, useEffect, useReducer, useRef } from "react";
 import ReactPlayer from 'react-player';
-import { socket } from "../../socket";
-import { PlayerControls } from './PlayerControls';
-import { chatState, chatReducer } from "../../reducers/chatReducer";
-import { nowPlayingState, nowPlayingReducer } from '../../reducers/nowPlayingReducer';
-import { combineReducers } from "../../reducers/dataReducer";
+import { socket } from "../../../socket";
+import { PlayerControls } from '../PlayerControls';
+import { chatState, chatReducer } from "../../../reducers/chatReducer";
+import { nowPlayingState, nowPlayingReducer } from '../../../reducers/nowPlayingReducer';
+import { combineReducers } from "../../../reducers/dataReducer";
+import './index.scss';
 
 export const NowPlaying = ({ pageUser }) => {
   const [nowPlayingId, setNowPlayingId] = useState('');
