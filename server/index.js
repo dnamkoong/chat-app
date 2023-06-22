@@ -43,7 +43,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('chatTyping', (data) => {
-    // console.log('chat typing: ', data);
+    console.log('chat typing: ', data);
     io.to(data.room).emit('chatTyping', data);
   });
 
@@ -51,6 +51,11 @@ io.on('connection', (socket) => {
     console.log('user list', data);
     io.to(data.room).emit('userList', data)
   });
+
+  // socket.on('userListLeave', (data) => {
+  //   console.log('user list leave', data);
+  //   io.to(data.room).emit('userListLeave', data)
+  // });
 
   socket.on('search', (data) => {
     // console.log('search', data);

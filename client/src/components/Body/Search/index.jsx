@@ -21,7 +21,6 @@ export const Search = () => {
         value={search}
         onChange={setSearch}
         placeHolder="Search Youtube"
-        active={search !== '' ? true : false}
         btnClick={handleQuery}
         btnText="Search"
       />

@@ -1,6 +1,6 @@
 import './Input.scss';
 
-export default function Input({ className, value, onChange, placeHolder, active, btnClick, btnText }) {
+export default function Input({ className, value, onChange, placeHolder, btnClick, btnText }) {
   return (
     <div className={`input ${className}`}>
       <form>
@@ -12,7 +12,7 @@ export default function Input({ className, value, onChange, placeHolder, active,
         />
         <button
           onClick={btnClick}
-          disabled={active ? '' : 'active'}
+          disabled={!value}
         >
           {btnText}
         </button>

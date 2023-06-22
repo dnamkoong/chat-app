@@ -1,42 +1,43 @@
-import { useState, useEffect, useRef, useReducer } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { socket } from "../../socket"
 import Input from "../Input";
+import { ChatHistory } from "./ChatHistory";
 import { chatState as initialState, chatReducer } from "../../reducers/chatReducer";
 import './index.scss';
 
-export const Chat = ({ chatLog, userName }) => {
+export const Chat = ({ userName }) => {
+  // const [pageUserId, setPageUserId] = useState('');
   const [chat, setChat] = useState('');
   const [typing, setTyping] = useState({ id: undefined, active: false });
   const [user, setUser] = useState('');
   const [name, setName] = useState('');
-  const [namePrev, setNamePrev] = useState('');
   const [chatSettings, setChatSettings] = useState(false);
   const [state, dispatch] = useReducer(chatReducer, initialState);
-  const bottomRef = useRef(null);
 
   const room = window.location.pathname
     .split('/')
     .pop();
 
+
   useEffect(() => {
     const onUserEvent = (data) => {
+      // console.log('user:', data, userName);
       if (userName === data.name) {
         const { id, name, room, color } = data;
         setUser({ id, name, room, color });
-        setNamePrev(data.name);
+        // setPageUserId(data.id)
         socket.emit('userList', { id, name, room, color });
       }
     };
 
     const onUserListEvent = (data) => {
-      // console.log('onUserListEvent: ', data);
+      // console.log('userList:', data);
       const { id, name, room, color } = data;
       // socket.emit('userList', { id, name, room, color })
       dispatch({ type: 'POST_USER_LIST', payload: { id, name, room, color } });
     }
 
     socket.on('user', onUserEvent);
-
     socket.on('userList', onUserListEvent);
 
     return () => {
@@ -50,27 +51,44 @@ export const Chat = ({ chatLog, userName }) => {
       id: user.id,
       name: user.name,
       room,
-      active: false
+      active: !!chat
     };
-
-    if (chat !== '') {
-      data.active = true;
-    }
 
     socket.emit('chatTyping', data);
 
-    socket.on('chatTyping', data => {
+    const onChatTypingEvent = (data) => {
       setTyping({
         id: data.id,
         name: data.name,
         room: data.room,
         active: data.active
       });
-    });
-    bottomRef?.current?.scrollIntoView({
-      behavior: 'smooth'
-    })
+    };
+
+    socket.on('chatTyping', onChatTypingEvent);
+
+    return () => {
+      socket.off('chatTyping', onChatTypingEvent);
+    }
   }, [chat]);
+
+  // useEffect(() => {
+  //   const onUserListLeaveEvent = (data) => {
+  //     if (data.room === room) {
+  //       dispatch({ type: 'POST_USER_LIST_LEAVE', payload: data });
+
+  //       if (pageUserId && pageUserId !== data.id) {
+  //         setChatServer(data)
+  //       }
+  //     }
+  //   }
+
+  //   socket.on('userListLeave', onUserListLeaveEvent);
+
+  //   return () => {
+  //     socket.off('userListLeave', onUserListLeaveEvent);
+  //   }
+  // }, [pageUserId]);
 
   const handleChat = (e) => {
     e.preventDefault();
@@ -84,59 +102,13 @@ export const Chat = ({ chatLog, userName }) => {
     e.preventDefault();
     const { id, room, color } = user;
 
-    setUser({ id, name, color });
-    let msg = { id, name, room, chat: `${namePrev} changed to ${name}`, color };
+    let msg = { id, name, room, chat: `${userName} changed to ${name}`, color };
     socket.emit('chat', msg);
     setUser({ id, name, room, color });
-
-    bottomRef.current.scrollIntoView({
-      behavior: 'smooth'
-    });
-
-    console.log(name);
 
     setName('');
     setChatSettings(false);
   };
-
-  let chatHistory = '';
-  chatHistory = (
-    <div
-      className="chat-history"
-      style={{
-        "overflowY": "scroll"
-      }}
-    >
-      {chatLog.map((item, i) => item.chat !== '' ? (
-          <div
-            key={i}
-            className={`chat-holder ${user.id === item.id ? 'me' : 'other'}`}
-          >
-            <div className="name">
-              <span
-                className="name-box"
-                style={{ background: item.color }}
-              ></span>
-              <p>{
-                  item.name.charAt(0).toUpperCase() + item.name.split('-').pop().charAt(0).toUpperCase()
-                }</p>
-            </div>
-
-            <p className="message">
-                {item.chat}
-              </p>
-          </div>
-      ) : '')}
-      <div className="bottomRef" ref={bottomRef} style={{ height: "24px" }} />
-    </div>
-  )
-
-  let chatTyping = '';
-  chatTyping = (
-    <p className={typing.active ? 'typing' : ''}>
-      {typing.active ? `${typing.name} is typing` : ''}
-    </p>
-  )
 
   return (
     <div className="chat">
@@ -146,7 +118,6 @@ export const Chat = ({ chatLog, userName }) => {
           value={name}
           onChange={setName}
           placeHolder="Change name"
-          active={name !== '' ? true : false}
           btnClick={handleName}
           btnText="Save"
         />
@@ -157,14 +128,19 @@ export const Chat = ({ chatLog, userName }) => {
           Settings
         </button>
         <hr />
-        {chatHistory}
-        {chatTyping}
+        <ChatHistory user={user} />
+        {
+          typing.active && (
+            <p className="typing">
+              {typing.name} is typing
+            </p>
+          )
+        }
         <Input
           className="message"
           value={chat}
           onChange={setChat}
           placeHolder="Send message"
-          active={chat !== '' ? true : false}
           btnClick={handleChat}
           btnText="Send"
         />

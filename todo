@@ -1,5 +1,13 @@
 6/22
-rearrange chat
+- name change doesnt update userList name
+
+- rearrange chat
+- userList not updating, userList in Chat updating
+- userListLeave socket
+
+
+
+- room doesnt have to be in every file
 
 - dispatch to use useReducer
 
@@ -21,6 +29,4 @@ router
 - user profiles contains info ex. name, twitter handle, etc
 
 
-
-
-DONE - chat bottom to bottom, currently one line above
+DONE - chat bottom when changing name
