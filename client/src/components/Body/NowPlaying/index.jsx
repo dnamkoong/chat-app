@@ -1,13 +1,12 @@
-import { useState, useEffect, useReducer, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import ReactPlayer from 'react-player';
 import { socket } from "../../../socket";
 import { PlayerControls } from '../PlayerControls';
-import { chatState, chatReducer } from "../../../reducers/chatReducer";
 // import { nowPlayingState, nowPlayingReducer } from '../../../reducers/nowPlayingReducer';
 // import { combineReducers } from "../../../reducers/dataReducer";
 import './index.scss';
 
-export const NowPlaying = ({ pageUser }) => {
+export const NowPlaying = ({ user }) => {
   const [nowPlayingId, setNowPlayingId] = useState('');
   const [nowPlayingServer, setNowPlayingServer] = useState(false);
   const [played, setPlayed] = useState(0.00);
@@ -21,15 +20,11 @@ export const NowPlaying = ({ pageUser }) => {
   //   chatState,
   //   nowPlayingState
   // });
-  const [state, dispatch] = useReducer(chatReducer, chatState);
-  const room = window.location.pathname
-    .split('/')
-    .pop();
   const refContainer = useRef(null);
 
   useEffect(() => {
     const onPlayIdEvent = (data) => {
-      if (data.room === room) {
+      if (data.room === user.room) {
         setNowPlayingId(data.videoId[0].id);
       }
     };
@@ -65,16 +60,14 @@ export const NowPlaying = ({ pageUser }) => {
   }, []);
 
   const handlePlay = () => {
-    socket.emit('nowPlaying', { playing: true, room });
-    console.log('handlePlay: ', state, chatState);
-    let user = state.chatState.userList;
+    socket.emit('nowPlaying', { playing: true, room: user.room });
     let data = {
-      id: pageUser,
+      id: user.id,
       videoId: nowPlayingId,
-      name: user[0].name,
-      room,
-      chat: 'has resumed the video',
-      color: user[0].color
+      name: user.name,
+      room: user.room,
+      chat: `${user.name} has resumed the video`,
+      color: user.color
     };
     if (nowPlayingServer === false) {
       socket.emit('chat', data);
@@ -82,15 +75,14 @@ export const NowPlaying = ({ pageUser }) => {
   };
 
   const handlePause = () => {
-    socket.emit('nowPlaying', { playing: false, room });
-    let user = state.chatState.userList;
+    socket.emit('nowPlaying', { playing: false, room: user.room });
     let data = {
-      id: pageUser,
+      id: user.id,
       videoId: nowPlayingId,
-      name: user[0].name,
-      room,
-      chat: 'has paused the video',
-      color: user[0].color
+      name: user.name,
+      room: user.room,
+      chat: `${user.name} has paused the video`,
+      color: user.color
     };
     if (nowPlayingServer !== false) {
       socket.emit('chat', data);
@@ -100,7 +92,7 @@ export const NowPlaying = ({ pageUser }) => {
   const handleProgress = (e) => {
     socket.emit('nowPlayingProgress', {
       progress: e.playedSeconds,
-      room
+      room: user.room
     });
     setPlayed(e.playedSeconds)
   };

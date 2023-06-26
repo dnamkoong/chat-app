@@ -22,9 +22,6 @@ io.on('connection', (socket) => {
   socket.on('joinRoom', ({ room, name, color }) => {
     const user = addUser(socket.id, name, room, color);
     socket.join(room);
-    console.log('joinRoom', room, name, color);
-
-    // console.log(getUsersInRoom(room).length);
 
     io.to(room).emit('chat', {
       id: socket.id,
@@ -34,28 +31,16 @@ io.on('connection', (socket) => {
       chat: `${name} has joined ${room}`
     });
     io.to(room).emit('user', user);
+    io.to(room).emit('userList', getUsersInRoom(room));
   });
 
   socket.on('chat', (data) => {
-    console.log('chat: ', data);
-
     io.to(data.room).emit('chat', data);
   });
 
   socket.on('chatTyping', (data) => {
-    console.log('chat typing: ', data);
     io.to(data.room).emit('chatTyping', data);
   });
-
-  socket.on('userList', (data) => {
-    console.log('user list', data);
-    io.to(data.room).emit('userList', data)
-  });
-
-  // socket.on('userListLeave', (data) => {
-  //   console.log('user list leave', data);
-  //   io.to(data.room).emit('userListLeave', data)
-  // });
 
   socket.on('search', (data) => {
     // console.log('search', data);
@@ -63,7 +48,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('query', (payloadPage, payloadItems, room) => {
-    console.log('query: ', payloadPage, payloadItems, room);
+    // console.log('query: ', payloadPage, payloadItems, room);
     io.to(room).emit('query', (payloadPage, payloadItems, room));
   });
 
@@ -72,6 +57,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('nowPlaying', (data) => {
+    // console.log('nowPlaying: ', data);
     io.to(data.room).emit('nowPlaying', data);
   });
 
@@ -105,8 +91,10 @@ io.on('connection', (socket) => {
 				name: toLeave.name,
 				chat: `${toLeave.name} has left the room`,
 				color: toLeave.color
-			})
-		}
+			});
+
+      io.to(toLeave.room).emit('userList', getUsersInRoom(toLeave.room));
+		};
   });
 });
 

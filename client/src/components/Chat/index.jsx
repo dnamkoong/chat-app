@@ -59,24 +59,6 @@ export const Chat = ({ user, userName }) => {
     }
   }, [chat]);
 
-  // useEffect(() => {
-  //   const onUserListLeaveEvent = (data) => {
-  //     if (data.room === room) {
-  //       dispatch({ type: 'POST_USER_LIST_LEAVE', payload: data });
-
-  //       if (pageUserId && pageUserId !== data.id) {
-  //         setChatServer(data)
-  //       }
-  //     }
-  //   }
-
-  //   socket.on('userListLeave', onUserListLeaveEvent);
-
-  //   return () => {
-  //     socket.off('userListLeave', onUserListLeaveEvent);
-  //   }
-  // }, [pageUserId]);
-
   const handleChat = (e) => {
     e.preventDefault();
     const { id, name, room, color } = user;

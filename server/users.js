@@ -1,4 +1,4 @@
-const users = [];
+let users = [];
 
 const addUser = (id, name, room, color) => {
   const user = { id, name, room, color };
@@ -13,7 +13,8 @@ const getUser = (id) => {
 }
 
 const removeUser = (id) => {
-  let toRemove = users.filter(user => user.id === id)
+  let toRemove = users.filter(user => user.id === id);
+  users = users.filter(user => user.id !== id);
 
   return toRemove[0];
 }

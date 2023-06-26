@@ -93,14 +93,14 @@ export const Body = ({ user }) => {
     };
 
     if (playingServer === false) {
-      data.chat = 'has chosen a video';
+      data.chat = `${user.name} has chosen a video`;
       setPlayingServer(!playingServer);
       socket.emit('playId', data);
       socket.emit('chat', data);
       socket.emit('playing', { data, playing: !playingServer });
       socket.emit('nowPlaying', { data, playing: true });
     } else {
-      data.chat = 'has changed the video';
+      data.chat = `${user.name} has changed the video`;
       setPlayingServer(!playingServer);
       socket.emit('playId', data);
       socket.emit('chat', data);
@@ -128,7 +128,7 @@ export const Body = ({ user }) => {
         />
 
         <NowPlaying
-          user={user.id}
+          user={user}
         />
         <div className="video-container">
           {state && state?.items.map((item, i) => (

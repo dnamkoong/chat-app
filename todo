@@ -1,9 +1,7 @@
-6/26
-- Create user name in server?
-  - This would connect id to name so on 'disconnect' name can be emitted to client since no way to emit name from client
-
 6/22
 - why 'userList' in NowPlaying not updating
+  - maybe on joinRoom, have it emit user array from server
+  - when should 'userList' be retrieved? onEffect where?
 
 - name change doesnt update userList name
 
@@ -37,3 +35,5 @@ router
 
 DONE - chat bottom when changing name
 DONE - Body and Chat both call socket 'user', call from Room and pass as prop
+DONE - Create user name in server?
+  - This would connect id to name so on 'disconnect' name can be emitted to client since no way to emit name from client
