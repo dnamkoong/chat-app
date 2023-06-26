@@ -77,7 +77,7 @@ export const Body = ({ user }) => {
         payloadItems,
       });
 
-      socket.emit('query', { searchState, payloadItems, room }); //
+      socket.emit('query', { searchState, payloadItems, room });
     }
   }
 

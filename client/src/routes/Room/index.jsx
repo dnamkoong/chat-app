@@ -25,7 +25,11 @@ const Room = () => {
     }
 
     const onUserEvent = (data) => {
-      if (name === data.name) {
+      if (data.length > 0) {
+        let newNameUser = data.find(user => user.color === color);
+        setUser(newNameUser);
+      }
+      if (color === data.color) {
         const { id, name, room, color } = data;
         setUser({ id, name, room, color });
         // setPageUserId(data.id)
@@ -53,7 +57,6 @@ const Room = () => {
         />
         <Chat
           user={user}
-          userName={name}
         />
       </div>
     </div>

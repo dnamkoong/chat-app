@@ -5,24 +5,18 @@ import { ChatHistory } from "./ChatHistory";
 import { chatState, chatReducer } from "../../reducers/chatReducer";
 import './index.scss';
 
-export const Chat = ({ user, userName }) => {
-  // const [pageUserId, setPageUserId] = useState('');
+export const Chat = ({ user }) => {
   const [chat, setChat] = useState('');
   const [typing, setTyping] = useState({ id: undefined, active: false });
-  const [name, setName] = useState('');
+  const [newName, setNewName] = useState('');
   const [chatSettings, setChatSettings] = useState(false);
   const [state, dispatch] = useReducer(chatReducer, chatState);
 
-  const room = window.location.pathname
-    .split('/')
-    .pop();
-
+  const { id, name, room, color } = user;
 
   useEffect(() => {
     const onUserListEvent = (data) => {
-      // console.log('userList:', data);
       const { id, name, room, color } = data;
-      // socket.emit('userList', { id, name, room, color })
       dispatch({ type: 'POST_USER_LIST', payload: { id, name, room, color } });
     }
 
@@ -35,8 +29,8 @@ export const Chat = ({ user, userName }) => {
 
   useEffect(() => {
     let data = {
-      id: user.id,
-      name: user.name,
+      id,
+      name,
       room,
       active: !!chat
     };
@@ -61,21 +55,17 @@ export const Chat = ({ user, userName }) => {
 
   const handleChat = (e) => {
     e.preventDefault();
-    const { id, name, room, color } = user;
-
     socket.emit('chat', { id, name, room, color, chat });
     setChat('');
   };
 
   const handleName = (e) => {
     e.preventDefault();
-    const { id, room, color } = user;
-
-    let msg = { id, name, room, chat: `${userName} changed to ${name}`, color };
+    let msg = { id, name, room, chat: `${name} changed to ${newName}`, color };
     socket.emit('chat', msg);
-    socket.emit('user', { id, name, room, color });
+    socket.emit('user', { id, room, name: newName, color });
 
-    setName('');
+    setNewName('');
     setChatSettings(false);
   };
 
@@ -84,8 +74,8 @@ export const Chat = ({ user, userName }) => {
       <div className="inner">
         <Input
           className={`name-change ${chatSettings ? 'active' : ''}`}
-          value={name}
-          onChange={setName}
+          value={newName}
+          onChange={setNewName}
           placeHolder="Change name"
           btnClick={handleName}
           btnText="Save"
