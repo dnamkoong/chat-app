@@ -1,5 +1,9 @@
-6/22
+6/26
+- Create user name in server?
+  - This would connect id to name so on 'disconnect' name can be emitted to client since no way to emit name from client
 
+6/22
+- why 'userList' in NowPlaying not updating
 
 - name change doesnt update userList name
 

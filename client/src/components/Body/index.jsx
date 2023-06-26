@@ -44,10 +44,8 @@ export const Body = ({ user }) => {
   useEffect(() => {
     if (page >= 0 && pageYT && room === searchRoom) {
       if (pageYT === 'next') {
-        console.log('1: ', searchServer, state.pageNext);
         getSearchQueryYT(searchServer, state.pageNext);
       } else {
-        console.log('2: ', searchServer, state.pageNext);
         getSearchQueryYT(searchServer, state.pagePrev);
       }
     }
@@ -84,9 +82,7 @@ export const Body = ({ user }) => {
   }
 
   const handlePlaying = (videoId) => {
-    console.log(chatState);
-    const playId = searchState.filter(el => el.id === videoId);
-    // const playId = items.filter(el => el.id === videoId);
+    const playId = state.items.filter(el => el.id === videoId);
 
     let data = {
       id: user.id,

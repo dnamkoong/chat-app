@@ -3,8 +3,8 @@ import ReactPlayer from 'react-player';
 import { socket } from "../../../socket";
 import { PlayerControls } from '../PlayerControls';
 import { chatState, chatReducer } from "../../../reducers/chatReducer";
-import { nowPlayingState, nowPlayingReducer } from '../../../reducers/nowPlayingReducer';
-import { combineReducers } from "../../../reducers/dataReducer";
+// import { nowPlayingState, nowPlayingReducer } from '../../../reducers/nowPlayingReducer';
+// import { combineReducers } from "../../../reducers/dataReducer";
 import './index.scss';
 
 export const NowPlaying = ({ pageUser }) => {
@@ -13,14 +13,15 @@ export const NowPlaying = ({ pageUser }) => {
   const [played, setPlayed] = useState(0.00);
   const [duration, setDuration] = useState(0.00);
   const [playbackRate, setPlaybackRate] = useState(1.0);
-  const combinedReducers = combineReducers({
-    chat: chatReducer,
-    nowPlaying: nowPlayingReducer
-  });
-  const [state, dispatch] = useReducer(combinedReducers, {
-    chatState,
-    nowPlayingState
-  });
+  // const combinedReducers = combineReducers({
+  //   chat: chatReducer,
+  //   nowPlaying: nowPlayingReducer
+  // });
+  // const [state, dispatch] = useReducer(combinedReducers, {
+  //   chatState,
+  //   nowPlayingState
+  // });
+  const [state, dispatch] = useReducer(chatReducer, chatState);
   const room = window.location.pathname
     .split('/')
     .pop();
@@ -65,6 +66,7 @@ export const NowPlaying = ({ pageUser }) => {
 
   const handlePlay = () => {
     socket.emit('nowPlaying', { playing: true, room });
+    console.log('handlePlay: ', state, chatState);
     let user = state.chatState.userList;
     let data = {
       id: pageUser,
@@ -115,7 +117,7 @@ export const NowPlaying = ({ pageUser }) => {
           onProgress={(e) => handleProgress(e)}
           playing={nowPlayingServer}
           playbackRate={playbackRate}
-          volume={state.nowPlayingState.volume}
+          // volume={state.nowPlayingState.volume}
           muted={false}
 
           onDuration={(e) => setDuration(e)}
@@ -128,7 +130,7 @@ export const NowPlaying = ({ pageUser }) => {
           handlePlay={handlePlay}
           handlePause={handlePause}
           nowPlayingServer={nowPlayingServer}
-          volume={state.nowPlayingState.volume}
+          // volume={state.nowPlayingState.volume}
         />
       </div>
     </div>

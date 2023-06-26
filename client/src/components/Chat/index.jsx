@@ -2,7 +2,7 @@ import { useState, useEffect, useReducer } from "react";
 import { socket } from "../../socket"
 import Input from "../Input";
 import { ChatHistory } from "./ChatHistory";
-import { chatState as initialState, chatReducer } from "../../reducers/chatReducer";
+import { chatState, chatReducer } from "../../reducers/chatReducer";
 import './index.scss';
 
 export const Chat = ({ user, userName }) => {
@@ -11,7 +11,7 @@ export const Chat = ({ user, userName }) => {
   const [typing, setTyping] = useState({ id: undefined, active: false });
   const [name, setName] = useState('');
   const [chatSettings, setChatSettings] = useState(false);
-  const [state, dispatch] = useReducer(chatReducer, initialState);
+  const [state, dispatch] = useReducer(chatReducer, chatState);
 
   const room = window.location.pathname
     .split('/')

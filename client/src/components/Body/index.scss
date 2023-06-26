@@ -5,7 +5,7 @@
   padding: 20px;
   flex: 1 1 100%;
   box-sizing: border-box;
-  // overflow: scroll;
+  overflow-y: scroll;
   height: 100%;
   @media screen and (max-width: 800px) {
     max-width: 100%;
@@ -119,6 +119,7 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
+      margin-top: 20px;
 
       &.active {
         display: flex;
@@ -138,12 +139,12 @@
           background: #e4e4e4;
           border-top-right-radius: 0;
           border-bottom-right-radius: 0;
-          left: 12px;
+          right: 12px;
         }
         &.next {
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
-          right: 12px;
+          left: 12px;
         }
         &:hover {
           color: #fff;

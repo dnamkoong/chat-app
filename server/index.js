@@ -95,10 +95,18 @@ io.on('connection', (socket) => {
     io.to(data.room).emit('playing', data);
   });
 
-  socket.on('disconnect', () => {
-    console.clear();
-    // console.log('A user disconnected: ', socket.id);
-    io.emit('messages', `${socket.id} user just disconnected!`);
+  socket.on('disconnecting', () => {
+    let toLeave = removeUser(socket.id)
+
+		if (toLeave) {
+			io.to(toLeave.room).emit('chat', {
+				room: toLeave.room,
+				id: toLeave.id,
+				name: toLeave.name,
+				chat: `${toLeave.name} has left the room`,
+				color: toLeave.color
+			})
+		}
   });
 });
 
