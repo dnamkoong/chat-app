@@ -1,9 +1,9 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useContext } from "react";
 import { createPortal } from 'react-dom';
 import { socket } from "../../socket"
 import Input from "../Input";
 import { ChatHistory } from "./ChatHistory";
-import { searchReducer, searchState } from "../../reducers/searchReducer";
+import { SearchContext } from "../../context/SearchContext";
 import './index.scss';
 
 export const Chat = ({ user, userList }) => {
@@ -13,7 +13,7 @@ export const Chat = ({ user, userList }) => {
   const [chatSettings, setChatSettings] = useState(false);
   const [showAllUsers, setShowAllUsers] = useState(false);
   const [showPlayed, setShowPlayed] = useState(false);
-  const [state, dispatch] = useReducer(searchReducer, searchState);
+  const searchState = useContext(SearchContext);
 
   const { id, name, room, color } = user;
 
@@ -97,9 +97,9 @@ export const Chat = ({ user, userList }) => {
                 <div className="inner">
                   <h2>Videos played</h2>
                   <ul>
-                    {state.videoHistory.map(({ publishedAt, title }) => (
+                    {searchState.videoHistory.map(({ publishedAt, title }) => (
                       <li
-                        key={publishedAt}
+                        key={publishedAt + 1}
                       >
                         {title}
                       </li>

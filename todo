@@ -1,9 +1,9 @@
 - use context to get reducer states in different components
   * Dont forget they pass state as props so check for that
   - searchReducer used in
-    - Body
-    - NowPlaying
-    - Chat
+    - Body DONE
+    - NowPlaying DONE
+    - Chat DONE
   - chatReducer used in
     - Room
 

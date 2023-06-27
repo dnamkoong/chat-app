@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, useReducer } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import ReactPlayer from 'react-player';
 import { socket } from "../../../socket";
 import { PlayerControls } from '../PlayerControls';
-import { searchReducer, searchState } from "../../../reducers/searchReducer";
+import { SearchDispatchContext } from "../../../context/SearchContext";
 import './index.scss';
 
 export const NowPlaying = ({ user }) => {
@@ -12,7 +12,7 @@ export const NowPlaying = ({ user }) => {
   const [duration, setDuration] = useState(0.00);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [volume, setVolume] = useState(100);
-  const [state, dispatch] = useReducer(searchReducer, searchState);
+  const dispatch = useContext(SearchDispatchContext);
   const room = window.location.pathname
     .split('/')
     .pop();

@@ -1,4 +1,4 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useContext } from "react";
 import millify from 'millify';
 import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en';
@@ -7,8 +7,8 @@ import { socket } from "../../socket";
 import { Search } from './Search';
 import { NowPlaying } from './NowPlaying'
 import { Player } from './Player';
-import { searchReducer, searchState } from "../../reducers/searchReducer";
 import searchService from '../../services/searchService';
+import { SearchContext, SearchDispatchContext } from "../../context/SearchContext";
 import './index.scss';
 
 TimeAgo.addLocale(en)
@@ -19,7 +19,8 @@ export const Body = ({ user }) => {
   const [playingServer, setPlayingServer] = useState(false);
   const [page, setPage] = useState(1);
   const [pageYT, setPageYT] = useState('');
-  const [state, dispatch] = useReducer(searchReducer, searchState);
+  const searchState = useContext(SearchContext);
+  const dispatch = useContext(SearchDispatchContext);
   const room = window.location.pathname
     .split('/')
     .pop();
@@ -44,9 +45,9 @@ export const Body = ({ user }) => {
   useEffect(() => {
     if (page >= 0 && pageYT && room === searchRoom) {
       if (pageYT === 'next') {
-        getSearchQueryYT(searchServer, state.pageNext);
+        getSearchQueryYT(searchServer, searchState.pageNext);
       } else {
-        getSearchQueryYT(searchServer, state.pagePrev);
+        getSearchQueryYT(searchServer, searchState.pagePrev);
       }
     }
   }, [page]);
@@ -82,7 +83,7 @@ export const Body = ({ user }) => {
   }
 
   const handlePlaying = (videoId) => {
-    const playId = state.items.filter(el => el.id === videoId);
+    const playId = searchState.items.filter(el => el.id === videoId);
 
     let data = {
       id: user.id,
@@ -131,7 +132,7 @@ export const Body = ({ user }) => {
           user={user}
         />
         <div className="video-container">
-          {state && state?.items.map((item, i) => (
+          {searchState && searchState?.items.map((item, i) => (
             <div
               key={i}
               className="video-holder"
@@ -166,7 +167,7 @@ export const Body = ({ user }) => {
           ))}
         </div>
 
-        <div className={`button-holder ${state?.items.length !== 0 ? 'active' : ''}`}>
+        <div className={`button-holder ${searchState?.items.length !== 0 ? 'active' : ''}`}>
           <button
             className="prev"
             onClick={() => handlePageClick('prev')}

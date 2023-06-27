@@ -4,6 +4,7 @@ import { Body } from "../../components/Body";
 import { Chat } from "../../components/Chat";
 import { nameGen, colorGen } from "../../utils";
 import { chatState, chatReducer } from "../../reducers/chatReducer";
+import { SearchProvider } from "../../context/SearchContext";
 import './index.scss';
 
 const Room = () => {
@@ -50,17 +51,21 @@ const Room = () => {
   }, []);
 
   return (
-    <div className="room">
-      <div className="inner">
-        <Body
-          user={user}
-        />
-        <Chat
-          user={user}
-          userList={state.userList}
-        />
-      </div>
-    </div>
+    <>
+      <SearchProvider>
+        <div className="room">
+          <div className="inner">
+            <Body
+              user={user}
+            />
+            <Chat
+              user={user}
+              userList={state.userList}
+            />
+          </div>
+        </div>
+      </SearchProvider>
+    </>
   )
 }
 
