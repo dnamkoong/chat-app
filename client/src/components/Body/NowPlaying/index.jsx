@@ -12,6 +12,9 @@ export const NowPlaying = ({ user }) => {
   const [played, setPlayed] = useState(0.00);
   const [duration, setDuration] = useState(0.00);
   const [playbackRate, setPlaybackRate] = useState(1.0);
+  const room = window.location.pathname
+    .split('/')
+    .pop();
   // const combinedReducers = combineReducers({
   //   chat: chatReducer,
   //   nowPlaying: nowPlayingReducer
@@ -24,7 +27,7 @@ export const NowPlaying = ({ user }) => {
 
   useEffect(() => {
     const onPlayIdEvent = (data) => {
-      if (data.room === user.room) {
+      if (data.room === room) {
         setNowPlayingId(data.videoId[0].id);
       }
     };

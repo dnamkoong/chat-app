@@ -29,7 +29,7 @@ export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowP
       socket.emit('seek', false);
     }
 
-    const handlePlaybackRate = () => {
+    const handlePlaybackRate = (e, rate) => {
       setActive(rate);
       socket.emit('playbackRate', { rate, room });
     }

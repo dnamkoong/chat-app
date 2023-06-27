@@ -54,12 +54,12 @@ io.on('connection', (socket) => {
   });
 
   socket.on('search', (data) => {
-    console.log('search', data);
+    // console.log('search', data);
     io.to(data.room).emit('search', data);
   });
 
   socket.on('query', (payloadPage, payloadItems, room) => {
-    console.log('query: ', payloadPage, payloadItems, room);
+    // console.log('query: ', payloadPage, payloadItems, room);
     io.to(room).emit('query', (payloadPage, payloadItems, room));
   });
 
@@ -69,27 +69,27 @@ io.on('connection', (socket) => {
   });
 
   socket.on('nowPlaying', (data) => {
-    console.log('nowPlaying: ', data);
+    // console.log('nowPlaying: ', data);
     io.to(data.room).emit('nowPlaying', data);
   });
 
   socket.on('nowPlayingProgress', (data) => {
-    console.log('nowPlayingProgress', data);
+    // console.log('nowPlayingProgress', data);
     io.to(data.room).emit('nowPlayingProgress', data);
   });
 
   socket.on('seek', (data) => {
-    console.log('seek', data);
+    // console.log('seek', data);
     io.to(data.room).emit('seek', data);
   });
 
   socket.on('seekScrub', (data) => {
-    console.log('seekScrub', data);
+    // console.log('seekScrub', data);
     io.to(data.room).emit('seekScrub', data);
   });
 
   socket.on('playbackRate', (data) => {
-    console.log('playbackRate', data);
+    // console.log('playbackRate', data);
     io.to(data.room).emit('playbackRate', data);
   });
 

@@ -1,8 +1,7 @@
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect } from "react";
 import { socket } from "../../socket"
 import Input from "../Input";
 import { ChatHistory } from "./ChatHistory";
-import { chatState, chatReducer } from "../../reducers/chatReducer";
 import './index.scss';
 
 export const Chat = ({ user }) => {
@@ -10,22 +9,8 @@ export const Chat = ({ user }) => {
   const [typing, setTyping] = useState({ id: undefined, active: false });
   const [newName, setNewName] = useState('');
   const [chatSettings, setChatSettings] = useState(false);
-  const [state, dispatch] = useReducer(chatReducer, chatState);
 
   const { id, name, room, color } = user;
-
-  useEffect(() => {
-    const onUserListEvent = (data) => {
-      const { id, name, room, color } = data;
-      dispatch({ type: 'POST_USER_LIST', payload: { id, name, room, color } });
-    }
-
-    socket.on('userList', onUserListEvent);
-
-    return () => {
-      socket.off('userList', onUserListEvent);
-    }
-  }, []);
 
   useEffect(() => {
     let data = {
