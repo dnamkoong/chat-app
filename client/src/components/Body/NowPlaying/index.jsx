@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useReducer } from "react";
 import ReactPlayer from 'react-player';
 import { socket } from "../../../socket";
 import { PlayerControls } from '../PlayerControls';
+import { searchReducer, searchState } from "../../../reducers/searchReducer";
 import './index.scss';
 
 export const NowPlaying = ({ user }) => {
@@ -11,6 +12,7 @@ export const NowPlaying = ({ user }) => {
   const [duration, setDuration] = useState(0.00);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [volume, setVolume] = useState(100);
+  const [state, dispatch] = useReducer(searchReducer, searchState);
   const room = window.location.pathname
     .split('/')
     .pop();
@@ -20,6 +22,8 @@ export const NowPlaying = ({ user }) => {
     const onPlayIdEvent = (data) => {
       if (data.room === room) {
         setNowPlayingId(data.videoId[0].id);
+
+        dispatch({ type: 'VIDEO_HISTORY', payload: data.videoId[0].snippet });
       }
     };
     const onNowPlayingEvent = (data) => {

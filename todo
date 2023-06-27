@@ -1,4 +1,12 @@
-- history of chat
+- use context to get reducer states in different components
+  * Dont forget they pass state as props so check for that
+  - searchReducer used in
+    - Body
+    - NowPlaying
+    - Chat
+  - chatReducer used in
+    - Room
+
 - history of videos
 - history of searches
 - private chat
@@ -49,3 +57,4 @@ DONE - fix name change
 DONE - volume controls
 DONE - fullscreen
 Done - show list of users in chat
+DONE - chat settings should not push down chat history

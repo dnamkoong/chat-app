@@ -17,17 +17,28 @@
 
   >.inner {
     flex-direction: column;
+    position: relative;
+    height: 100%;
 
     .chat-settings {
-      // margin-top: -60px;
-      margin-top: -115px;
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: -151px;
+      z-index: 99;
+      background: #fff;
       transition: .3s ease-in-out;
 
       &.active {
-        margin-top: 0;
+        top: 0;
+
+        .btn {
+          opacity: 1;
+          pointer-events: visible;
+        }
       }
 
-      .btn-settings {
+      .btn {
         margin-top: 20px;
         width: 100%;
         border-radius: 3px;
@@ -36,6 +47,8 @@
         color: #fff;
         cursor: pointer;
         outline: none;
+        opacity: 0;
+        pointer-events: none;
         transition: .3s ease-in-out;
         &:hover {
           background: #fff;
@@ -43,7 +56,13 @@
           color: #1aa6b7;
         }
 
-        +.btn-settings {
+        &:last-of-type {
+          opacity: 1;
+          pointer-events: visible;
+          transition: .3s ease-in-out;
+        }
+
+        +.btn {
           margin-top: 10px;
         }
       }
@@ -56,6 +75,7 @@
     }
 
     .typing {
+      background: #fff;
       position: absolute;
       bottom: 50px;
       left: 0;
@@ -70,9 +90,9 @@
 
     .input.message {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
+      bottom: 0px;
+      left: -20px;
+      width: calc(100% + 20px);
       z-index: 1;
       @media screen and (max-width: 800px) {
         z-index: 9;
@@ -82,7 +102,6 @@
       input {
         padding: 10px 20px;
         border-radius: 0;
-        border-left: none;
         border-right: none;
         font-size: 16px;
       }
@@ -96,13 +115,12 @@
 
 .users-list {
   position: absolute;
-  // background: #fff;
   background: #ececec;
   width: 100%;
   height: 100%;
   left: 0;
   top: 0;
-  z-index: 9;
+  z-index: 99;
 
   .inner {
     padding: 10px;

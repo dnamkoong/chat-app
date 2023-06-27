@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState } from "react";
 import { socket } from "../../../socket";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from "../../../utils";

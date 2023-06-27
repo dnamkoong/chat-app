@@ -1,11 +1,7 @@
 .chat-history {
-  // height: calc(100vh - 170px);
-  // height: calc(100vh - 230px);
-  // min-height: 200px;
-  padding-bottom: 60px;
-
-  height: calc(100vh - 195px);
-
+  padding-bottom: 70px;
+  top: 80px;
+  height: calc(100vh - 185px);
   position: relative;
   @media screen and (max-width: 800px) {
     height: auto;

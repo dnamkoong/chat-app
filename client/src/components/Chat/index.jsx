@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { createPortal } from 'react-dom';
 import { socket } from "../../socket"
 import Input from "../Input";
 import { ChatHistory } from "./ChatHistory";
+import { searchReducer, searchState } from "../../reducers/searchReducer";
 import './index.scss';
 
 export const Chat = ({ user, userList }) => {
@@ -11,6 +12,8 @@ export const Chat = ({ user, userList }) => {
   const [newName, setNewName] = useState('');
   const [chatSettings, setChatSettings] = useState(false);
   const [showAllUsers, setShowAllUsers] = useState(false);
+  const [showPlayed, setShowPlayed] = useState(false);
+  const [state, dispatch] = useReducer(searchReducer, searchState);
 
   const { id, name, room, color } = user;
 
@@ -78,7 +81,7 @@ export const Chat = ({ user, userList }) => {
                   </ul>
 
                   <button
-                    className="btn btn-settings"
+                    className="btn"
                     onClick={() => setShowAllUsers(!showAllUsers)}
                   >
                     Close
@@ -88,17 +91,49 @@ export const Chat = ({ user, userList }) => {
               document.querySelector("#root > div > div > div.chat")
             )
           }
+          {
+            showPlayed && createPortal(
+              <div className="users-list">
+                <div className="inner">
+                  <h2>Videos played</h2>
+                  <ul>
+                    {state.videoHistory.map(({ publishedAt, title }) => (
+                      <li
+                        key={publishedAt}
+                      >
+                        {title}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    className="btn"
+                    onClick={() => setShowPlayed(!showPlayed)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>,
+              document.querySelector("#root > div > div > div.chat")
+            )
+          }
           <button
-            className="btn btn-settings"
+            className="btn"
             onClick={() => setShowAllUsers(!showAllUsers)}
           >
             {showAllUsers ? 'Hide' : 'Show'} all users
           </button>
           <button
-            className="btn btn-settings"
+            className="btn"
+            onClick={() => setShowPlayed(!showPlayed)}
+          >
+            {showPlayed ? 'Hide' : 'Show'} played videos
+          </button>
+          <button
+            className="btn"
             onClick={() => setChatSettings(!chatSettings)}
           >
-            Settings
+            {chatSettings ? 'Close' : ''} Settings
           </button>
           <hr />
         </div>

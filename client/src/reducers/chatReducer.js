@@ -1,6 +1,5 @@
 export const chatState = {
  userList: [],
- chatHistory: [],
 };
 
 export const chatReducer = (state = chatState, action) => {
@@ -8,11 +7,6 @@ export const chatReducer = (state = chatState, action) => {
     case 'POST_USER_LIST':
       return {
         userList: action.payload
-      }
-    case 'CHAT_HISTORY':
-      return {
-        ...state,
-        chatHistory: action.payload
       }
     default:
       return state;
