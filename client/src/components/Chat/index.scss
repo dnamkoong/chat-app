@@ -18,10 +18,41 @@
   >.inner {
     flex-direction: column;
 
-    hr {
-      margin: 20px auto;
-      border: 1px solid #ddd;
-      width: 100%;
+    .chat-settings {
+      // margin-top: -60px;
+      margin-top: -115px;
+      transition: .3s ease-in-out;
+
+      &.active {
+        margin-top: 0;
+      }
+
+      .btn-settings {
+        margin-top: 20px;
+        width: 100%;
+        border-radius: 3px;
+        border: 1px solid #1aa6b7;
+        background: #1aa6b7;
+        color: #fff;
+        cursor: pointer;
+        outline: none;
+        transition: .3s ease-in-out;
+        &:hover {
+          background: #fff;
+          border: 1px solid #1aa6b7 !important;
+          color: #1aa6b7;
+        }
+
+        +.btn-settings {
+          margin-top: 10px;
+        }
+      }
+
+      hr {
+        margin: 20px auto;
+        border: 1px solid #ddd;
+        width: 100%;
+      }
     }
 
     .typing {
@@ -37,40 +68,7 @@
       }
     }
 
-    .btn-settings {
-      margin-top: 20px;
-      width: 100%;
-      border-radius: 3px;
-      border: 1px solid #1aa6b7;
-      background: #1aa6b7;
-      color: #fff;
-      cursor: pointer;
-      outline: none;
-      transition: .3s ease-in-out;
-      &:hover {
-        background: #fff;
-        border: 1px solid #1aa6b7 !important;
-        color: #1aa6b7;
-      }
-
-      +.btn-settings {
-        margin-top: 10px;
-      }
-    }
-
-    .input {
-
-      &.name-change {
-        // margin-top: -60px;
-        margin-top: -115px;
-        transition: .3s ease-in-out;
-
-        &.active {
-          margin-top: 0;
-        }
-      }
-
-      &.message {
+      .message {
         position: absolute;
         bottom: 0;
         left: 0;
@@ -93,7 +91,6 @@
           border-radius: 0;
         }
       }
-    }
   }
 }
 

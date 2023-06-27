@@ -1,5 +1,12 @@
-- show list of users in chat
+- history of chat
+- history of videos
+- history of searches
+- private chat
+- video que?
+- Invite link
+- show options ex. YouTube, Facebook, Twitch, SoundCloud, Streamable, Vimeo, Wistia, Mixcloud, and DailyMotion?
 
+- refactor code
 
 - rearrange chat
 - userList not updating, userList in Chat updating
@@ -41,3 +48,4 @@ DONE - fix name change
   - doesnt update userList name
 DONE - volume controls
 DONE - fullscreen
+Done - show list of users in chat

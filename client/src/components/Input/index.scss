@@ -29,6 +29,13 @@
         background: #fff;
         color: #333;
       }
+
+      &:disabled {
+        background: gray;
+        border: gray;
+        color: #fff;
+        pointer-events: none;
+      }
     }
   }
 }

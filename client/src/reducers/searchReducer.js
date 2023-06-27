@@ -3,6 +3,8 @@ export const searchState = {
   items: [],
   pagePrev: '',
   pageNext: '',
+  searchHistory: [],
+  videoHistory: [],
 };
 
 export const searchReducer = (state = searchState, action) => {
@@ -12,7 +14,17 @@ export const searchReducer = (state = searchState, action) => {
         ...state,
         pagePrev: action.payloadPage.prevPageToken,
         pageNext: action.payloadPage.nextPageToken,
-        items: action.payloadItems.items,
+        items: action.payloadItems.items
+      }
+    case 'SEARCH_HISTORY':
+        return {
+          ...state,
+          searchHistory: action.payloadItems.searchHistory,
+        }
+    case 'VIDEO_PLAYED_HISTORY':
+      return {
+        ...state,
+        videoHistory: action.payloadItems.videoHistory,
       }
     default:
       return state;

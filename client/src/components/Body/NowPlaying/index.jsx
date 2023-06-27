@@ -2,7 +2,6 @@ import { useState, useEffect, useRef, useReducer } from "react";
 import ReactPlayer from 'react-player';
 import { socket } from "../../../socket";
 import { PlayerControls } from '../PlayerControls';
-// import { combineReducers } from "../../../reducers/dataReducer";
 import './index.scss';
 
 export const NowPlaying = ({ user }) => {

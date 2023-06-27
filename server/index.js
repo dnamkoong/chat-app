@@ -64,7 +64,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('playId', (data) => {
-    console.log('playId', data);
+    // console.log('playId', data);
     io.to(data.room).emit('playId', data);
   });
 
@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('playing', (data) => {
-    console.log('playing', data);
+    // console.log('playing', data);
     io.to(data.room).emit('playing', data);
   });
 

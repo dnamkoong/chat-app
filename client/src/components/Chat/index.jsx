@@ -59,47 +59,49 @@ export const Chat = ({ user, userList }) => {
   return (
     <div className="chat">
       <div className="inner">
-        <Input
-          className={`name-change ${chatSettings ? 'active' : ''}`}
-          value={newName}
-          onChange={setNewName}
-          placeHolder="Change name"
-          btnClick={handleName}
-          btnText="Save"
-        />
-        {
-          showAllUsers && createPortal(
-            <div className="users-list">
-              <div className="inner">
-                <h2>Users list</h2>
-                <ul>
-                  {userList.map(user => <li key={user.id}>{user.name}</li>)}
-                </ul>
+        <div className={`chat-settings ${chatSettings ? 'active' : ''}`}>
+          <Input
+            className="name-change"
+            value={newName}
+            onChange={setNewName}
+            placeHolder="Change name"
+            btnClick={handleName}
+            btnText="Save"
+          />
+          {
+            showAllUsers && createPortal(
+              <div className="users-list">
+                <div className="inner">
+                  <h2>Users list</h2>
+                  <ul>
+                    {userList.map(user => <li key={user.id}>{user.name}</li>)}
+                  </ul>
 
-                <button
-                  className="btn btn-settings"
-                  onClick={() => setShowAllUsers(!showAllUsers)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>,
-            document.querySelector("#root > div > div > div.chat")
-          )
-        }
-        <button
-          className="btn btn-settings"
-          onClick={() => setShowAllUsers(!showAllUsers)}
-        >
-          {showAllUsers ? 'Hide' : 'Show'} all users
-        </button>
-        <button
-          className="btn btn-settings"
-          onClick={() => setChatSettings(!chatSettings)}
-        >
-          Settings
-        </button>
-        <hr />
+                  <button
+                    className="btn btn-settings"
+                    onClick={() => setShowAllUsers(!showAllUsers)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>,
+              document.querySelector("#root > div > div > div.chat")
+            )
+          }
+          <button
+            className="btn btn-settings"
+            onClick={() => setShowAllUsers(!showAllUsers)}
+          >
+            {showAllUsers ? 'Hide' : 'Show'} all users
+          </button>
+          <button
+            className="btn btn-settings"
+            onClick={() => setChatSettings(!chatSettings)}
+          >
+            Settings
+          </button>
+          <hr />
+        </div>
         <ChatHistory user={user} />
         {
           typing.active && (
