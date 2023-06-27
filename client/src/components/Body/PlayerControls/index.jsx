@@ -1,7 +1,7 @@
 import { useState, useReducer } from "react";
 import { socket } from "../../../socket";
 import { nowPlayingState, nowPlayingReducer } from "../../../reducers/nowPlayingReducer";
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from "../../../utils";
 import './index.scss';
 
@@ -58,17 +58,13 @@ export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowP
 
     let volumeUI
     if (volumeSlider === 0) {
-      // volumeUI = <FontAwesomeIcon icon="volume-mute" className="volume volume-mute" />
-      volumeUI = 'mute'
+      volumeUI = <FontAwesomeIcon icon="fa-solid fa-volume-xmark" className="volume volume-mute" />
     } else if (volumeSlider >= 0.50) {
-      // volumeUI = <FontAwesomeIcon icon="volume-up" className="volume volume-up" />
-      volumeUI = 'up'
+      volumeUI = <FontAwesomeIcon icon="fa-solid fa-volume-high" className="volume volume-up" />
     } else if (volumeSlider <= 0.49) {
-      // volumeUI = <FontAwesomeIcon icon="volume-down" className="volume volume-down" />
-      volumeUI = 'down'
+      volumeUI = <FontAwesomeIcon icon="fa-solid fa-volume-low" className="volume volume-down" />
     } else {
-      // volumeUI = <FontAwesomeIcon icon="volume-up" className="volume volume-up" />
-      volumeUI = 'up'
+      volumeUI = <FontAwesomeIcon icon="fa-solid fa-volume-high" className="volume volume-up" />
     }
 
     return (
@@ -77,10 +73,8 @@ export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowP
           <div className="left-holder">
             {
               nowPlayingServer !== true ?
-              'play' :
-              'pause'
-              // <FontAwesomeIcon icon="play" onClick={() => handlePlay()} className="play" /> :
-              // <FontAwesomeIcon icon="pause" onClick={() => handlePause()} className="pause" />
+              <FontAwesomeIcon icon="fa-solid fa-play" onClick={() => handlePlay()} className="play" /> :
+              <FontAwesomeIcon icon="fa-solid fa-pause" onClick={() => handlePause()} className="pause" />
             }
           </div>
           <div className="middle-holder">
@@ -147,17 +141,11 @@ export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowP
               </div>
             </div>
 
-            {/* <FontAwesomeIcon
-              icon="expand"
+            <FontAwesomeIcon
+              icon="fa-solid fa-expand"
               className="fullscreen"
               onClick={(e) => handleFullscreen(e)}
-            /> */}
-            <button
-              className="fullscreen"
-              onClick={(e) => handleFullscreen(e)}
-            >
-              fullscreen
-            </button>
+            />
           </div>
         </div>
       </div>

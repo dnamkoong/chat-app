@@ -1,8 +1,4 @@
 6/22
-- fix name change
-  - name change on wrong user
-  - doesnt update userList name
-
 - rearrange chat
 - userList not updating, userList in Chat updating
 - userListLeave socket
@@ -38,3 +34,6 @@ DONE - Create user name in server?
 DONE - why 'userList' in NowPlaying not updating
   - maybe on joinRoom, have it emit user array from server
   - when should 'userList' be retrieved? onEffect where?
+DONE - fix name change
+  - name change on wrong user
+  - doesnt update userList name

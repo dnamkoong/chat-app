@@ -10,6 +10,25 @@ import Home from './routes/Home';
 import Room from './routes/Room';
 import './index.css'
 
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+  faVolumeXmark,
+  faVolumeHigh,
+  faVolumeLow,
+  faPlay,
+  faPause,
+  faExpand,
+} from '@fortawesome/free-solid-svg-icons'
+
+library.add(
+  faVolumeXmark,
+  faVolumeHigh,
+  faVolumeLow,
+  faPlay,
+  faPause,
+  faExpand,
+)
+
 const router = createBrowserRouter([
   {
     path: '/',
