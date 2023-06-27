@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
+import { createPortal } from 'react-dom';
 import { socket } from "../../socket"
 import Input from "../Input";
 import { ChatHistory } from "./ChatHistory";
 import './index.scss';
 
-export const Chat = ({ user }) => {
+export const Chat = ({ user, userList }) => {
   const [chat, setChat] = useState('');
   const [typing, setTyping] = useState({ id: undefined, active: false });
   const [newName, setNewName] = useState('');
   const [chatSettings, setChatSettings] = useState(false);
+  const [showAllUsers, setShowAllUsers] = useState(false);
 
   const { id, name, room, color } = user;
 
@@ -65,6 +67,32 @@ export const Chat = ({ user }) => {
           btnClick={handleName}
           btnText="Save"
         />
+        {
+          showAllUsers && createPortal(
+            <div className="users-list">
+              <div className="inner">
+                <h2>Users list</h2>
+                <ul>
+                  {userList.map(user => <li key={user.id}>{user.name}</li>)}
+                </ul>
+
+                <button
+                  className="btn btn-settings"
+                  onClick={() => setShowAllUsers(!showAllUsers)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>,
+            document.querySelector("#root > div > div > div.chat")
+          )
+        }
+        <button
+          className="btn btn-settings"
+          onClick={() => setShowAllUsers(!showAllUsers)}
+        >
+          {showAllUsers ? 'Hide' : 'Show'} all users
+        </button>
         <button
           className="btn btn-settings"
           onClick={() => setChatSettings(!chatSettings)}

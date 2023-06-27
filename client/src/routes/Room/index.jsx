@@ -57,6 +57,7 @@ const Room = () => {
         />
         <Chat
           user={user}
+          userList={state.userList}
         />
       </div>
     </div>

@@ -32,7 +32,7 @@ io.on('connection', (socket) => {
       color,
       chat: `${name} has joined ${room}`
     });
-    console.log('getUsersInRoom: ', getUsersInRoom(room));
+    // console.log('getUsersInRoom: ', getUsersInRoom(room));
     io.to(room).emit('user', user);
     io.to(room).emit('userList', getUsersInRoom(room));
   });
