@@ -1,12 +1,3 @@
-- use context to get reducer states in different components
-  * Dont forget they pass state as props so check for that
-  - searchReducer used in
-    - Body DONE
-    - NowPlaying DONE
-    - Chat DONE
-  - chatReducer: no need, only used in Room
-
-- history of videos
 - history of searches
 - private chat
 - video que?
@@ -57,3 +48,11 @@ DONE - volume controls
 DONE - fullscreen
 Done - show list of users in chat
 DONE - chat settings should not push down chat history
+DONE - use context to get reducer states in different components
+  * Dont forget they pass state as props so check for that
+  - searchReducer used in
+    - Body DONE
+    - NowPlaying DONE
+    - Chat DONE
+  - chatReducer: no need, only used in Room
+DONE - history of videos

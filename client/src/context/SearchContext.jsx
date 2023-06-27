@@ -35,7 +35,10 @@ function searchReducer(state = searchState, action) {
     case 'SEARCH_HISTORY':
       return {
         ...state,
-        searchHistory: action.payloadItems.searchHistory,
+        searchHistory: [
+          ...state.searchHistory,
+          action.payload
+        ],
       }
     default:
       return state;

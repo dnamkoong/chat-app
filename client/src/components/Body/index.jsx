@@ -30,6 +30,8 @@ export const Body = ({ user }) => {
       setSearchServer(data);
       setSearchRoom(data.room);
 
+      dispatch({ type: 'SEARCH_HISTORY', payload: data.search });
+
       if (room === data.room) {
         getSearchQueryYT(data);
       }

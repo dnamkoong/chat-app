@@ -13,6 +13,7 @@ export const Chat = ({ user, userList }) => {
   const [chatSettings, setChatSettings] = useState(false);
   const [showAllUsers, setShowAllUsers] = useState(false);
   const [showPlayed, setShowPlayed] = useState(false);
+  const [showSearched, setShowSearched] = useState(false);
   const searchState = useContext(SearchContext);
 
   const { id, name, room, color } = user;
@@ -73,7 +74,7 @@ export const Chat = ({ user, userList }) => {
           />
           {
             showAllUsers && createPortal(
-              <div className="users-list">
+              <div className="portal-list">
                 <div className="inner">
                   <h2>Users list</h2>
                   <ul>
@@ -92,8 +93,34 @@ export const Chat = ({ user, userList }) => {
             )
           }
           {
+            showSearched && createPortal(
+              <div className="portal-list">
+                <div className="inner">
+                  <h2>Videos Searched</h2>
+                  <ul>
+                    {searchState.searchHistory.map((search, i) => (
+                      <li
+                        key={i}
+                      >
+                        {search}
+                      </li>
+                    ))}
+                  </ul>
+
+                  <button
+                    className="btn"
+                    onClick={() => setShowSearched(!showSearched)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>,
+              document.querySelector("#root > div > div > div.chat")
+            )
+          }
+          {
             showPlayed && createPortal(
-              <div className="users-list">
+              <div className="portal-list">
                 <div className="inner">
                   <h2>Videos played</h2>
                   <ul>
@@ -122,6 +149,12 @@ export const Chat = ({ user, userList }) => {
             onClick={() => setShowAllUsers(!showAllUsers)}
           >
             {showAllUsers ? 'Hide' : 'Show'} all users
+          </button>
+          <button
+            className="btn"
+            onClick={() => setShowSearched(!showSearched)}
+          >
+            {showPlayed ? 'Hide' : 'Show'} searched videos
           </button>
           <button
             className="btn"
