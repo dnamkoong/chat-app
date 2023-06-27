@@ -5,7 +5,7 @@ import { PlayerControls } from '../PlayerControls';
 import { SearchDispatchContext } from "../../../context/SearchContext";
 import './index.scss';
 
-export const NowPlaying = ({ user }) => {
+export const NowPlaying = ({ user, room }) => {
   const [nowPlayingId, setNowPlayingId] = useState('');
   const [nowPlayingServer, setNowPlayingServer] = useState(false);
   const [played, setPlayed] = useState(0.00);
@@ -13,9 +13,6 @@ export const NowPlaying = ({ user }) => {
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [volume, setVolume] = useState(100);
   const dispatch = useContext(SearchDispatchContext);
-  const room = window.location.pathname
-    .split('/')
-    .pop();
   const refContainer = useRef(null);
 
   useEffect(() => {
@@ -126,6 +123,7 @@ export const NowPlaying = ({ user }) => {
           handlePause={handlePause}
           nowPlayingServer={nowPlayingServer}
           volume={handleVolume}
+          room={room}
         />
       </div>
     </div>

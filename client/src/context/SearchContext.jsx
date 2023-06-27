@@ -33,10 +33,10 @@ function searchReducer(state = searchState, action) {
         ]
       }
     case 'SEARCH_HISTORY':
-        return {
-          ...state,
-          searchHistory: action.payloadItems.searchHistory,
-        }
+      return {
+        ...state,
+        searchHistory: action.payloadItems.searchHistory,
+      }
     default:
       return state;
   }

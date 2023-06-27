@@ -124,12 +124,12 @@ export const Body = ({ user }) => {
     <div className={`body ${searchServer ? 'active' : ''}`}>
       <div className="inner">
         <Search
-          pageYT={pageYT}
-          page={page}
+          room={room}
         />
 
         <NowPlaying
           user={user}
+          room={room}
         />
         <div className="video-container">
           {searchState && searchState?.items.map((item, i) => (

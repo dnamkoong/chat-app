@@ -3,11 +3,8 @@ import { socket } from "../../../socket";
 import Input from "../../Input";
 import './index.scss';
 
-export const Search = () => {
+export const Search = ({ room }) => {
   const [search, setSearch] = useState('nba');
-  const room = window.location.pathname
-    .split('/')
-    .pop();
 
   const handleQuery = (e) => {
     e.preventDefault();

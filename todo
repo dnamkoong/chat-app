@@ -4,8 +4,7 @@
     - Body DONE
     - NowPlaying DONE
     - Chat DONE
-  - chatReducer used in
-    - Room
+  - chatReducer: no need, only used in Room
 
 - history of videos
 - history of searches

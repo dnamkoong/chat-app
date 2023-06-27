@@ -4,12 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from "../../../utils";
 import './index.scss';
 
-export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowPlayingServer, volume }) => {
+export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowPlayingServer, volume, room }) => {
   const [active, setActive] = useState(1);
   const [volumeSlider, setVolumeSlider] = useState(10);
-  const room = window.location.pathname
-    .split('/')
-    .pop();
 
     const playBackRates = [0.25, 0.50, 0.75, 1, 1.25, 1.50, 1.75, 2];
 
