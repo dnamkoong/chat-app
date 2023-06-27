@@ -1,8 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useReducer } from "react";
 import ReactPlayer from 'react-player';
 import { socket } from "../../../socket";
 import { PlayerControls } from '../PlayerControls';
-// import { nowPlayingState, nowPlayingReducer } from '../../../reducers/nowPlayingReducer';
 // import { combineReducers } from "../../../reducers/dataReducer";
 import './index.scss';
 
@@ -12,17 +11,10 @@ export const NowPlaying = ({ user }) => {
   const [played, setPlayed] = useState(0.00);
   const [duration, setDuration] = useState(0.00);
   const [playbackRate, setPlaybackRate] = useState(1.0);
+  const [volume, setVolume] = useState(100);
   const room = window.location.pathname
     .split('/')
     .pop();
-  // const combinedReducers = combineReducers({
-  //   chat: chatReducer,
-  //   nowPlaying: nowPlayingReducer
-  // });
-  // const [state, dispatch] = useReducer(combinedReducers, {
-  //   chatState,
-  //   nowPlayingState
-  // });
   const refContainer = useRef(null);
 
   useEffect(() => {
@@ -100,10 +92,15 @@ export const NowPlaying = ({ user }) => {
     setPlayed(e.playedSeconds)
   };
 
+  const handleVolume = (vol) => {
+    setVolume(vol)
+  }
+
   return (
     <div className={`now-playing ${nowPlayingId !== '' ? 'active' : 'hide'}`}>
       <div className="video-holder">
         <ReactPlayer
+          className="react-player"
           id="react-player"
           ref={refContainer}
           width="100%"
@@ -112,7 +109,7 @@ export const NowPlaying = ({ user }) => {
           onProgress={(e) => handleProgress(e)}
           playing={nowPlayingServer}
           playbackRate={playbackRate}
-          // volume={state.nowPlayingState.volume}
+          volume={volume}
           muted={false}
 
           onDuration={(e) => setDuration(e)}
@@ -125,7 +122,7 @@ export const NowPlaying = ({ user }) => {
           handlePlay={handlePlay}
           handlePause={handlePause}
           nowPlayingServer={nowPlayingServer}
-          // volume={state.nowPlayingState.volume}
+          volume={handleVolume}
         />
       </div>
     </div>

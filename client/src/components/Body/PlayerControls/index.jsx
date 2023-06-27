@@ -1,14 +1,12 @@
 import { useState, useReducer } from "react";
 import { socket } from "../../../socket";
-import { nowPlayingState, nowPlayingReducer } from "../../../reducers/nowPlayingReducer";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from "../../../utils";
 import './index.scss';
 
-export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowPlayingServer }) => {
+export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowPlayingServer, volume }) => {
   const [active, setActive] = useState(1);
   const [volumeSlider, setVolumeSlider] = useState(10);
-  const [state, dispatch] = useReducer(nowPlayingReducer, nowPlayingState);
   const room = window.location.pathname
     .split('/')
     .pop();
@@ -41,18 +39,18 @@ export const PlayerControls = ({ duration, played, handlePlay, handlePause, nowP
 
     const handleVolume = (e) => {
       let num = parseFloat(e.target.value);
-      num = num.toFixed(2);
+      num = Number(num.toFixed(2));
       setVolumeSlider(num);
-      dispatch({ type: 'VOLUME_ADJUST', payload: num });
+      volume(num);
     }
 
     const handleMute = () => {
       if (volumeSlider !== 0) {
         setVolumeSlider(0)
-        dispatch({ type: 'VOLUME_ADJUST', payload: 0 });
+        volume(0);
       } else {
         setVolumeSlider(100);
-        dispatch({ type: 'VOLUME_ADJUST', payload: 100 });
+        volume(100);
       }
     }
 

@@ -8,7 +8,7 @@
 
 // 5 export const API_KEY_YOUTUBE = "AIzaSyBRgx5TcnxjFoWEZeWeUYWu2hFpNOQgI9s"
 
-export const API_KEY_YOUTUBE = "AIzaSyDhW1ZfbZd7nG_6MwBd4GsOIuVDIQKHZ3M"
+export const API_KEY_YOUTUBE = "AIzaSyBBmASqUEMSKSvfqH-wf6p02qqomnqTFPQ"
 
 export const BASE_URL_YOUTUBE = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=9&type=video&q="
 

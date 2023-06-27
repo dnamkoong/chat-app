@@ -139,7 +139,7 @@ export const Body = ({ user }) => {
               <div
                 className="video-wrapper"
                 onClick={() => handlePlaying(item.id)}
-              >handlePlaying</div>
+              ></div>
               <Player videoId={item.id} />
               <div className="details">
                 <h2 className="title">

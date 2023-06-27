@@ -1,4 +1,4 @@
-6/22
+
 - rearrange chat
 - userList not updating, userList in Chat updating
 - userListLeave socket
@@ -37,3 +37,5 @@ DONE - why 'userList' in NowPlaying not updating
 DONE - fix name change
   - name change on wrong user
   - doesnt update userList name
+DONE - volume controls
+DONE - fullscreen

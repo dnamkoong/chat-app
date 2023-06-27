@@ -1,6 +1,9 @@
 .room {
   height: 100%;
   position: relative;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
 
   >.inner {
     width: 100%;
