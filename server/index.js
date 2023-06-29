@@ -3,6 +3,8 @@ const app = express();
 const http = require('http').Server(app);
 const cors = require('cors');
 
+const router = require('./router');
+
 const {
   addUser,
   removeUser,
@@ -12,10 +14,16 @@ const {
 } = require('./users');
 
 app.use(cors());
+app.use(router)
+
+const allowedOrigins = [
+  "http://localhost:8000",
+  "https://stream-party1-1025b976ed36.herokuapp.com/"
+]
 
 const io = require('socket.io')(http, {
   cors: {
-      origin: "http://localhost:8000"
+      origin: allowedOrigins
   }
 });
 
@@ -116,6 +124,6 @@ io.on('connection', (socket) => {
   });
 });
 
-http.listen(4000, () => {
-  // console.log(`Server listening on 4000`);
+http.listen(process.env.PORT || 4000, () => {
+  console.log(`Server listening on ${process.env.PORT}`);
 });
